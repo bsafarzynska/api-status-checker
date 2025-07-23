@@ -1,0 +1,21 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.10'
+
+  - script: |
+      pip install -r requirements.txt
+      python main.py
+    displayName: 'Run API status checker'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: 'raport.csv'
+      artifactName: 'StatusReport'
+      publishLocation: 'Container'
